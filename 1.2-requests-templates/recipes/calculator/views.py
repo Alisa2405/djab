@@ -1,4 +1,4 @@
-from django.shortcuts import render
+pythifrom django.shortcuts import render
 
 DATA = {
     'omlet': {
@@ -19,12 +19,26 @@ DATA = {
     # можете добавить свои рецепты ;)
 }
 
-# Напишите ваш обработчик. Используйте DATA как источник данных
-# Результат - render(request, 'calculator/index.html', context)
-# В качестве контекста должен быть передан словарь с рецептом:
-# context = {
-#   'recipe': {
-#     'ингредиент1': количество1,
-#     'ингредиент2': количество2,
-#   }
-# }
+def recipe_view(request, dish):
+    # получаем servings из GET, по умолчанию 1
+    servings = request.GET.get('servings', 1)
+    servings = int(servings)
+
+    # берём рецепт
+    recipe = DATA.get(dish)
+
+    # если рецепт найден — считаем ингредиенты
+    if recipe:
+        recipe = {
+            ingredient: amount * servings
+            for ingredient, amount in recipe.items()
+        }
+
+    context = {
+        'recipe': {
+            'ингредиент1': количество1,
+            'ингредиент2': количество2,
+        }
+    }
+
+    return render(request, 'calculator/index.html', context)
