@@ -18,6 +18,7 @@ from django.urls import path
 
 import phones.views
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', phones.views.show_catalog),

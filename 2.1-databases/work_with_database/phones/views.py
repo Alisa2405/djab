@@ -32,3 +32,4 @@ def show_product(request, slug):
     }
 
     return render(request, template, context)
+
